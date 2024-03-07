@@ -9,9 +9,13 @@ namespace DatabaseProjectTemplate.DataAccessObject
         public abstract void Save();
         public abstract void Delete();
 
+        public static virtual string SelectAllQuery { get; }
+        public static virtual string InsertQuery { get; }
+        public static virtual string DeleteQuery { get; }
+
         public static T? LoadFromRow<T>(DataRow row) where T : IDataAccessObject
         {
-            IEnumerable<PropertyInfo?> allProperties = typeof(T).GetProperties().Where(n => n.MemberType is MemberTypes.Property && !Attribute.IsDefined(n, typeof(DatabaseIgnore)));
+            IEnumerable<PropertyInfo?> allProperties = typeof(T).GetProperties().Where(n => n.MemberType is MemberTypes.Property);
 
             if (!allProperties.Any())
             {

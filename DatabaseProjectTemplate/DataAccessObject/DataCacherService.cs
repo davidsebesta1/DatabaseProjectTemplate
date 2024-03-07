@@ -14,7 +14,7 @@ namespace DatabaseProjectTemplate.DataAccessObject
             Dictionary<int, object> dictionary = _cache[type];
             dictionary.Clear();
 
-            foreach (DataRow row in SqlDatabaseConnection.Instance.ExecuteQuery(DAOQueryCacher.GetSelectQuery<T>()).Rows)
+            foreach (DataRow row in SqlDatabaseConnection.Instance.ExecuteQuery(Convert.ToString(type.GetProperty("SelectAllQuery").GetValue(null))).Rows)
             {
                 T? obj = IDataAccessObject.LoadFromRow<T>(row);
                 dictionary.Add(obj.ID, obj);
